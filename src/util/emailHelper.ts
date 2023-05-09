@@ -24,6 +24,7 @@ function buildBody(result: ResultInfo) {
                 <div style="margin:50px">
                     <div>检查时间: ${new Date().toLocaleString()}</div>
                     <div style="color:red">检查结果: ${result.error && result.error.message || "未知异常"}</div>
+                    <div>信息来源: <a href="https://jy.tj.gov.cn/BMFW/rxzs/ywjyzs/">点击查看</a></div>
                 </div>
                 `
             }
@@ -39,7 +40,24 @@ function buildBody(result: ResultInfo) {
             <div style="margin:50px">
                 <div>检查时间: ${new Date().toLocaleString()}</div>
                 <div>检查结果: 暂未发布招生信息</div>
+                <div>信息来源: <a href="https://jy.tj.gov.cn/BMFW/rxzs/ywjyzs/">点击查看</a></div>
             </div>`
+
+        default:
+            break;
+    }
+}
+
+function buildTitle(result: ResultInfo){
+    switch (result.type) {
+        case "checkRecruitment":
+            if (!result.success) {
+                return `异常：招生信息获取异常通知`
+            }
+            if (!!result.data?.published) {
+                return  `！！！！！！！招生啦！！！！！！！！`
+            }
+            return `招生信息：未开始`
 
         default:
             break;
@@ -55,7 +73,7 @@ export function sendHappyResult(options: SendOptions) {
     const mailOptions: Mail.Options = {
         from: config.user.email,
         to: config.user.email,
-        subject: options.subject || "招生信息Happy通知",
+        subject: buildTitle(options.result) || options.subject || "招生信息Happy通知",
         html: bodyHTML
     }
     mailer.sendQQEmail(mailOptions);
