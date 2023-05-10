@@ -31,10 +31,8 @@ jobs:
         run: npm ci
       - name: 开始任务
         env:
-          USER_ACCOUNT_LIST: ${{ secrets.USER_ACCOUNT_LIST }}
-          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           USER_EMAIL_PASSWORD: ${{ secrets.USER_EMAIL_PASSWORD }}
-          USER_COOKIES: ${{ secrets.USER_COOKIES }}
+          USER_EMAIL_TO: ${{ secrets.USER_EMAIL_TO }}
         run: |
           npm run tStart
