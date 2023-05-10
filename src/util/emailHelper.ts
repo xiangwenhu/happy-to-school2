@@ -72,7 +72,7 @@ export function sendHappyResult(options: SendOptions) {
 
     const mailOptions: Mail.Options = {
         from: config.user.email,
-        to: config.user.email,
+        to: config.user.emailTo,
         subject: buildTitle(options.result) || options.subject || "招生信息Happy通知",
         html: bodyHTML
     }
