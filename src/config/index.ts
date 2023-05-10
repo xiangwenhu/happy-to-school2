@@ -31,8 +31,11 @@ export default function getConfig(): IConfig {
 
 function initConfig() {
     if (fs.existsSync(path.join(__dirname, "./index.local.js"))) {
-        const config = require("./index.local") as IConfig;
-        return config
+        const config = require("./index.local");
+        // return config
+        for(let key in config) {
+            process.env[key] = config[key as keyof IConfig]
+        }
     }
 
     return {
@@ -43,7 +46,7 @@ function initConfig() {
         }
     } as IConfig;
 }
-
+initConfig();
 
 
 
